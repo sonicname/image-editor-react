@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <Suspense>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Homepage />} />
+            <Route path='/' element={<ImageEditor />} />
             <Route path='/editor' element={<ImageEditor />} />
           </Routes>
         </BrowserRouter>
