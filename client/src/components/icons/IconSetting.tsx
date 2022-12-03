@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const IconSetting = () => {
   return (
     <svg
@@ -17,4 +19,4 @@ const IconSetting = () => {
   );
 };
 
-export default IconSetting;
+export default memo(IconSetting);

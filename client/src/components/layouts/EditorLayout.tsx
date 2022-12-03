@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import Sidebar from '../sidebar/Sidebar';
+import { memo, ReactNode } from 'react';
 
 interface IEditorLayoutProps {
   children: ReactNode;
@@ -15,4 +15,4 @@ const EditorLayout = ({ children, className }: IEditorLayoutProps) => {
   );
 };
 
-export default EditorLayout;
+export default memo(EditorLayout);

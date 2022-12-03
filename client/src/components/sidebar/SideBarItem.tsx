@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import classNames from 'classnames';
+import { ReactNode, memo } from 'react';
 
 import IconDown from '../icons/IconDown';
 import useToggle from '../../hooks/useToggle';
@@ -23,4 +23,4 @@ const SideBarItem = ({ children, content }: ISidebarItemProps) => {
   );
 };
 
-export default SideBarItem;
+export default memo(SideBarItem);
