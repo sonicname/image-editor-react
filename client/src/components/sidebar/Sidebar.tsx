@@ -12,6 +12,11 @@ interface IColorTools {
   defaultValue?: number;
 }
 
+interface IButtonToolList {
+  title: string;
+  id: string;
+}
+
 const colorTools: IColorTools[] = [
   {
     id: 'brightness',
@@ -57,36 +62,56 @@ const colorTools: IColorTools[] = [
   },
 ];
 
+const buttonList: IButtonToolList[] = [
+  {
+    title: 'Rotate 90°',
+    id: 'rorate-90deg',
+  },
+  {
+    title: 'Flip',
+    id: 'flip',
+  },
+];
+
 const Sidebar = () => {
   return (
-    <div className='relative'>
-      <div
-        className={classNames(
-          'py-5 flex flex-col min-h-screen max-h-screen overflow-y-scroll text-black shadow-md',
-        )}
-      >
-        <h2 className='text-center font-semibold mb-2'>Editor Tools</h2>
-        <SideBarItem content='Color'>
-          {colorTools.map((tool) => (
-            <SidebarItemContent key={tool.id}>
-              <label htmlFor={tool.id} className='font-light text-sm text-black'>
-                {tool.title}
-              </label>
-              <input
-                min={tool.min}
-                defaultValue={tool.defaultValue}
-                max={tool.max}
-                type={'range'}
-                id={tool.id}
-                onChange={(e) => console.log(e.target.value)}
-              />
-            </SidebarItemContent>
-          ))}
-        </SideBarItem>
+    <div
+      className={classNames(
+        'py-5 flex flex-col h-screen w-60 overflow-y-scroll text-black shadow-md',
+      )}
+    >
+      <h2 className='text-center font-semibold mb-2'>Editor Tools</h2>
+      <SideBarItem content='Color'>
+        {colorTools.map((tool) => (
+          <SidebarItemContent key={tool.id}>
+            <label htmlFor={tool.id} className='font-light text-sm text-black'>
+              {tool.title}
+            </label>
+            <input
+              min={tool.min}
+              defaultValue={tool.defaultValue}
+              max={tool.max}
+              type={'range'}
+              id={tool.id}
+              onChange={(e) => console.log(e.target.value)}
+            />
+          </SidebarItemContent>
+        ))}
+      </SideBarItem>
 
-        <SideBarItem content='Rotate & Flip' />
-        <SideBarItem content='Filter' />
-      </div>
+      <SideBarItem content='Rotate & Flip'>
+        <div className='p-2 lg:p-4 flex flex-wrap gap-2 lg:gap-4'>
+          {buttonList.map((button) => (
+            <button
+              key={button.id}
+              className='p-2 rounded-md border border-gray-300 text-black font-semibold hover:bg-green-400 hover:text-white shadow-md active:scale-90 duration-150'
+            >
+              {button.title}
+            </button>
+          ))}
+        </div>
+      </SideBarItem>
+      <SideBarItem content='Filter' />
     </div>
   );
 };
