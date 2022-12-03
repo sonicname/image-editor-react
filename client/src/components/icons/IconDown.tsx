@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import classNames from 'classnames';
 
 interface IconProps {
@@ -19,4 +20,4 @@ const IconDown = ({ className }: IconProps) => {
   );
 };
 
-export default IconDown;
+export default memo(IconDown);
