@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const IconClose = () => {
   return (
     <svg
@@ -13,4 +15,4 @@ const IconClose = () => {
   );
 };
 
-export default IconClose;
+export default memo(IconClose);

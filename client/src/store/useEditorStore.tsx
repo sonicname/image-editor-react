@@ -7,6 +7,8 @@ interface IEditorStore {
   contrast: number;
   grayscale: number;
   opacity: number;
+  invert: number;
+  sepia: number;
   setOption: (optionID: string, value: number) => void;
 }
 
@@ -17,6 +19,8 @@ const useEditorStore = create<IEditorStore>((set) => ({
   grayscale: 0,
   saturate: 100,
   contrast: 100,
+  invert: 0,
+  sepia: 0,
   setOption: (option, value) => {
     switch (option) {
       case 'brightness':
@@ -29,6 +33,10 @@ const useEditorStore = create<IEditorStore>((set) => ({
         return set(() => ({ grayscale: value }));
       case 'saturate':
         return set(() => ({ saturate: value }));
+      case 'invert':
+        return set(() => ({ invert: value }));
+      case 'sepia':
+        return set(() => ({ sepia: value }));
       default:
         return set(() => ({ contrast: value }));
     }
