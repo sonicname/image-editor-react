@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import SideBarItem from './SideBarItem';
 import SidebarItemContent from './SidebarItemContent';
 
+import useEditorStore from '../../store/useEditorStore';
+
 interface IColorTools {
   title: string;
   id: string;
@@ -12,18 +14,13 @@ interface IColorTools {
   defaultValue?: number;
 }
 
-interface IButtonToolList {
-  title: string;
-  id: string;
-}
-
 const colorTools: IColorTools[] = [
   {
     id: 'brightness',
     title: 'Brightness',
-    min: -100,
-    max: 100,
-    defaultValue: 0,
+    min: 0,
+    max: 200,
+    defaultValue: 100,
   },
   {
     id: 'blur',
@@ -36,15 +33,15 @@ const colorTools: IColorTools[] = [
     id: 'saturate',
     title: 'Saturate',
     min: 0,
-    max: 100,
-    defaultValue: 50,
+    max: 200,
+    defaultValue: 100,
   },
   {
     id: 'contrast',
     title: 'Contrast',
     min: 0,
-    max: 100,
-    defaultValue: 50,
+    max: 200,
+    defaultValue: 100,
   },
   {
     id: 'grayscale',
@@ -58,22 +55,13 @@ const colorTools: IColorTools[] = [
     title: 'Opacity',
     min: 0,
     max: 100,
-    defaultValue: 0,
-  },
-];
-
-const buttonList: IButtonToolList[] = [
-  {
-    title: 'Rotate 90°',
-    id: 'rorate-90deg',
-  },
-  {
-    title: 'Flip',
-    id: 'flip',
+    defaultValue: 100,
   },
 ];
 
 const Sidebar = () => {
+  const { setOption } = useEditorStore();
+
   return (
     <div
       className={classNames(
@@ -93,7 +81,7 @@ const Sidebar = () => {
               max={tool.max}
               type={'range'}
               id={tool.id}
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(e) => setOption(tool.id, parseInt(e.target.value))}
             />
           </SidebarItemContent>
         ))}
@@ -101,14 +89,21 @@ const Sidebar = () => {
 
       <SideBarItem content='Rotate & Flip'>
         <div className='p-2 lg:p-4 flex flex-wrap gap-2 lg:gap-4'>
-          {buttonList.map((button) => (
-            <button
-              key={button.id}
-              className='p-2 rounded-md border border-gray-300 text-black font-semibold hover:bg-green-400 hover:text-white shadow-md active:scale-90 duration-150'
-            >
-              {button.title}
-            </button>
-          ))}
+          <button className='p-2 flex items-center justify-center shadow-md rounded-md border border-gray-300 active:scale-90 duration-75'>
+            <img className='w-6 h-6 object-cover' src='/rotate.png' alt='rorate' />
+          </button>
+
+          <button className='p-2 flex items-center justify-center shadow-md rounded-md border border-gray-300 active:scale-90 duration-75'>
+            <img className='w-6 h-6 object-cover scale-x-[-1]' src='/rotate.png' alt='rorate' />
+          </button>
+
+          <button className='p-2 flex items-center justify-center shadow-md rounded-md border border-gray-300 active:scale-90 duration-75'>
+            <img className='w-6 h-6 object-cover' src='/flip.png' alt='rorate' />
+          </button>
+
+          <button className='p-2 flex items-center justify-center shadow-md rounded-md border border-gray-300 active:scale-90 duration-75'>
+            <img className='w-6 h-6 object-cover -rotate-90' src='/flip.png' alt='rorate' />
+          </button>
         </div>
       </SideBarItem>
       <SideBarItem content='Filter' />
