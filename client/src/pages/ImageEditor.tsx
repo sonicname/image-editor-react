@@ -4,12 +4,14 @@ import ReactImageUploading from 'react-images-uploading';
 
 import IconClose from '../components/icons/IconClose';
 import EditorLayout from '../components/layouts/EditorLayout';
+
 import useEditorStore from '../store/useEditorStore';
 
 const ImageEditor = () => {
   const [images, setImages] = useState([]);
 
-  const { blur, brightness, contrast, grayscale, opacity, saturate } = useEditorStore();
+  const { blur, brightness, contrast, grayscale, opacity, saturate, invert, sepia } =
+    useEditorStore();
 
   return (
     <EditorLayout>
@@ -27,7 +29,7 @@ const ImageEditor = () => {
                     <img
                       className={classNames('w-full h-full block object-scale-down')}
                       style={{
-                        filter: `blur(${blur}px) brightness(${brightness}%) saturate(${saturate}%) contrast(${contrast}%) grayscale(${grayscale}%) opacity(${opacity}%)`,
+                        filter: `blur(${blur}px) brightness(${brightness}%) saturate(${saturate}%) contrast(${contrast}%) grayscale(${grayscale}%) opacity(${opacity}%) invert(${invert}%) sepia(${sepia}%)`,
                       }}
                       src={imageList[0].dataURL}
                       alt=''
@@ -49,7 +51,7 @@ const ImageEditor = () => {
                     onClick={onImageUpload}
                     {...dragProps}
                   >
-                    <span className='font-medium'>drag your image here</span>
+                    <span className='font-medium'>Drag your image here</span>
                   </div>
                 )}
               </>
