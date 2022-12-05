@@ -1,28 +1,34 @@
 import { useState } from 'react';
 import classNames from 'classnames';
-import ReactImageUploading, { ImageListType } from 'react-images-uploading';
+import ReactImageUploading from 'react-images-uploading';
 
 import IconClose from '../components/icons/IconClose';
 import EditorLayout from '../components/layouts/EditorLayout';
+import useEditorStore from '../store/useEditorStore';
 
 const ImageEditor = () => {
   const [images, setImages] = useState([]);
 
-  const onChange = (imageList: ImageListType) => {
-    setImages(imageList as never[]);
-  };
+  const { blur, brightness, contrast, grayscale, opacity, saturate } = useEditorStore();
 
   return (
     <EditorLayout>
       <div className='p-2 lg:p-4 flex items-center justify-center flex-1 bg-gray-200'>
-        <ReactImageUploading value={images} maxNumber={1} onChange={onChange}>
+        <ReactImageUploading
+          value={images}
+          maxNumber={1}
+          onChange={(imageList) => setImages(imageList as never[])}
+        >
           {({ imageList, onImageUpload, isDragging, dragProps, onImageRemove }) => {
             return (
               <>
                 {imageList.length > 0 ? (
                   <div className='w-3xl h-[567px] rounded overflow-hidden shadow-lg relative'>
                     <img
-                      className='w-full h-full block object-scale-down'
+                      className={classNames('w-full h-full block object-scale-down')}
+                      style={{
+                        filter: `blur(${blur}px) brightness(${brightness}%) saturate(${saturate}%) contrast(${contrast}%) grayscale(${grayscale}%) opacity(${opacity}%)`,
+                      }}
                       src={imageList[0].dataURL}
                       alt=''
                     />
