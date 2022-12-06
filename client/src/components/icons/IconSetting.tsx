@@ -1,6 +1,7 @@
 import { memo } from 'react';
+import classNames from 'classnames';
 
-const IconSetting = () => {
+const IconSetting = ({ className }: { className?: string }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -8,7 +9,7 @@ const IconSetting = () => {
       viewBox='0 0 24 24'
       strokeWidth={1.5}
       stroke='currentColor'
-      className='w-4 h-4 lg:w-6 lg:h-6'
+      className={classNames('w-4 h-4 lg:w-6 lg:h-6', className)}
     >
       <path
         strokeLinecap='round'
