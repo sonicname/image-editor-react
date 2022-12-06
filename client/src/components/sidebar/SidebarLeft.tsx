@@ -1,5 +1,4 @@
-import { memo } from 'react';
-import classNames from 'classnames';
+import { ChangeEvent, memo } from 'react';
 
 import SideBarItem from './SideBarItem';
 import SidebarItemContent from './SidebarItemContent';
@@ -12,6 +11,7 @@ interface IColorTools {
   min?: number;
   max?: number;
   defaultValue?: number;
+  step?: number;
 }
 
 const colorTools: IColorTools[] = [
@@ -27,6 +27,7 @@ const colorTools: IColorTools[] = [
     title: 'Blur',
     min: 0,
     max: 100,
+    step: 25,
     defaultValue: 0,
   },
   {
@@ -74,15 +75,46 @@ const colorTools: IColorTools[] = [
 ];
 
 const SidebarLeft = () => {
-  const { setOption } = useEditorStore();
+  const {
+    setOption,
+    resetOption,
+    blur,
+    brightness,
+    contrast,
+    grayscale,
+    invert,
+    opacity,
+    saturate,
+    sepia,
+  } = useEditorStore();
+
+  const getStateVal = (optionID: string) => {
+    switch (optionID) {
+      case 'blur':
+        return blur;
+      case 'brightness':
+        return brightness;
+      case 'contrast':
+        return contrast;
+      case 'grayscale':
+        return grayscale;
+      case 'invert':
+        return invert;
+      case 'opacity':
+        return opacity;
+      case 'saturate':
+        return saturate;
+      default:
+        return sepia;
+    }
+  };
 
   return (
     <div
-      className={classNames(
-        'py-5 flex flex-col h-screen w-60 overflow-y-scroll text-black shadow-md',
-      )}
+      className={
+        'py-2 flex flex-col gap-y-2 lg:gap-y-4 h-screen w-60 overflow-y-scroll text-black shadow-md'
+      }
     >
-      <h2 className='text-center font-semibold mb-2'>Editor Tools</h2>
       <SideBarItem content='Color'>
         {colorTools.map((tool) => (
           <SidebarItemContent key={tool.id}>
@@ -92,20 +124,31 @@ const SidebarLeft = () => {
             >
               {tool.title}
               <span className='p-1 rounded bg-blue-500 text-white text-xs shadow-md'>
-                {(document.getElementById(`${tool.id}`) as HTMLInputElement)?.value}
+                {getStateVal(tool.id)}
               </span>
             </label>
             <input
               min={tool.min}
-              defaultValue={tool.defaultValue}
+              defaultValue={getStateVal(tool.id)}
+              value={getStateVal(tool.id)}
               max={tool.max}
               type={'range'}
+              step={tool.step}
               id={tool.id}
               onChange={(e) => setOption(tool.id, parseInt(e.target.value))}
             />
           </SidebarItemContent>
         ))}
       </SideBarItem>
+
+      <div className='p-2 lg:p-4'>
+        <button
+          onClick={resetOption}
+          className='w-full bg-green-500 text-white p-2 rounded-md shadow-md active:scale-90 duration-100'
+        >
+          Reset
+        </button>
+      </div>
     </div>
   );
 };

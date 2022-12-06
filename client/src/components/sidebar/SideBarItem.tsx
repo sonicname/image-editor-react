@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { ReactNode, memo } from 'react';
 
 import IconDown from '../icons/IconDown';
+
 import useToggle from '../../hooks/useToggle';
 
 interface ISidebarItemProps {

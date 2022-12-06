@@ -10,6 +10,7 @@ interface IEditorStore {
   invert: number;
   sepia: number;
   setOption: (optionID: string, value: number) => void;
+  resetOption: () => void;
 }
 
 const useEditorStore = create<IEditorStore>((set) => ({
@@ -41,6 +42,17 @@ const useEditorStore = create<IEditorStore>((set) => ({
         return set(() => ({ contrast: value }));
     }
   },
+  resetOption: () =>
+    set(() => ({
+      brightness: 100,
+      blur: 0,
+      opacity: 100,
+      grayscale: 0,
+      saturate: 100,
+      contrast: 100,
+      invert: 0,
+      sepia: 0,
+    })),
 }));
 
 export default useEditorStore;
