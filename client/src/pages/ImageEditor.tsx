@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import classNames from 'classnames';
 import ReactImageUploading from 'react-images-uploading';
 
@@ -8,18 +7,30 @@ import EditorLayout from '../components/layouts/EditorLayout';
 import useEditorStore from '../store/useEditorStore';
 
 const ImageEditor = () => {
-  const [images, setImages] = useState([]);
-
-  const { blur, brightness, contrast, grayscale, opacity, saturate, invert, sepia } =
-    useEditorStore();
+  const {
+    blur,
+    brightness,
+    contrast,
+    grayscale,
+    opacity,
+    saturate,
+    invert,
+    sepia,
+    isFlipped,
+    isReverseFlipped,
+    isReverseRotated,
+    isRotated,
+    setImage,
+    image,
+  } = useEditorStore();
 
   return (
     <EditorLayout>
       <div className='p-2 lg:p-4 flex items-center justify-center flex-1 bg-gray-200'>
         <ReactImageUploading
-          value={images}
+          value={image}
           maxNumber={1}
-          onChange={(imageList) => setImages(imageList as never[])}
+          onChange={(imageList) => setImage(imageList)}
         >
           {({ imageList, onImageUpload, isDragging, dragProps, onImageRemove }) => {
             return (
@@ -27,11 +38,17 @@ const ImageEditor = () => {
                 {imageList.length > 0 ? (
                   <div className='w-3xl h-[567px] rounded overflow-hidden shadow-lg relative'>
                     <img
-                      className={classNames('w-full h-full block object-scale-down')}
+                      className={classNames(
+                        'w-full h-full block object-scale-down duration-150',
+                        isRotated && 'rotate-90',
+                        isReverseRotated && '-rotate-90',
+                        isFlipped && 'scale-x-[-1]',
+                        isReverseFlipped && 'scale-y-[-1] scale-x-[-1]',
+                      )}
                       style={{
                         filter: `blur(${blur}px) brightness(${brightness}%) saturate(${saturate}%) contrast(${contrast}%) grayscale(${grayscale}%) opacity(${opacity}%) invert(${invert}%) sepia(${sepia}%)`,
                       }}
-                      src={imageList[0].dataURL}
+                      src={image[0].dataURL}
                       alt=''
                     />
 

@@ -1,6 +1,8 @@
 import create from 'zustand';
+import { ImageListType } from 'react-images-uploading';
 
 interface IEditorStore {
+  image: ImageListType;
   brightness: number;
   blur: number;
   saturate: number;
@@ -9,11 +11,21 @@ interface IEditorStore {
   opacity: number;
   invert: number;
   sepia: number;
+  isRotated: boolean;
+  isReverseRotated: boolean;
+  isFlipped: boolean;
+  isReverseFlipped: boolean;
+  touchedRotate: () => void;
+  touchedFlipped: () => void;
+  touchedReverseRotate: () => void;
+  touchedReverseFlip: () => void;
+  setImage: (imageList: ImageListType) => void;
   setOption: (optionID: string, value: number) => void;
   resetOption: () => void;
 }
 
 const useEditorStore = create<IEditorStore>((set) => ({
+  image: [],
   brightness: 100,
   blur: 0,
   opacity: 100,
@@ -22,6 +34,17 @@ const useEditorStore = create<IEditorStore>((set) => ({
   contrast: 100,
   invert: 0,
   sepia: 0,
+  isRotated: false,
+  isReverseRotated: false,
+  isFlipped: false,
+  isReverseFlipped: false,
+  touchedReverseRotate: () =>
+    set((state) => ({ isReverseRotated: !state.isReverseRotated, isRotated: false })),
+  touchedReverseFlip: () =>
+    set((state) => ({ isReverseFlipped: !state.isReverseFlipped, isFlipped: false })),
+  touchedFlipped: () => set((state) => ({ isFlipped: !state.isFlipped, isReverseFlipped: false })),
+  touchedRotate: () => set((state) => ({ isRotated: !state.isRotated, isReverseRotated: false })),
+  setImage: (imageList) => set(() => ({ image: imageList })),
   setOption: (option, value) => {
     switch (option) {
       case 'brightness':
