@@ -18,8 +18,7 @@ const ImageEditor = () => {
     sepia,
     isFlipped,
     isReverseFlipped,
-    isReverseRotated,
-    isRotated,
+    rotateDeg,
     setImage,
     image,
   } = useEditorStore();
@@ -40,13 +39,12 @@ const ImageEditor = () => {
                     <img
                       className={classNames(
                         'w-full h-full block object-scale-down duration-150',
-                        isRotated && 'rotate-90',
-                        isReverseRotated && '-rotate-90',
                         isFlipped && 'scale-x-[-1]',
-                        isReverseFlipped && 'scale-y-[-1] scale-x-[-1]',
+                        isReverseFlipped && 'scale-y-[-1]',
                       )}
                       style={{
                         filter: `blur(${blur}px) brightness(${brightness}%) saturate(${saturate}%) contrast(${contrast}%) grayscale(${grayscale}%) opacity(${opacity}%) invert(${invert}%) sepia(${sepia}%)`,
+                        rotate: `${rotateDeg}deg`,
                       }}
                       src={image[0].dataURL}
                       alt=''

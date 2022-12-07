@@ -1,4 +1,4 @@
-import { ChangeEvent, memo } from 'react';
+import { memo } from 'react';
 
 import SideBarItem from './SideBarItem';
 import SidebarItemContent from './SidebarItemContent';
@@ -87,6 +87,7 @@ const SidebarLeft = () => {
     opacity,
     saturate,
     sepia,
+    image,
   } = useEditorStore();
 
   const getStateVal = (optionID: string) => {
@@ -111,11 +112,7 @@ const SidebarLeft = () => {
   };
 
   return (
-    <div
-      className={
-        'py-2 flex flex-col gap-y-2 lg:gap-y-4 h-screen w-60 overflow-y-scroll text-black shadow-md'
-      }
-    >
+    <div className='py-2 flex flex-col gap-y-2 lg:gap-y-4 h-screen w-60 overflow-y-scroll text-black shadow-md'>
       <SideBarItem content='Color'>
         {colorTools.map((tool) => (
           <SidebarItemContent key={tool.id}>
@@ -130,13 +127,13 @@ const SidebarLeft = () => {
             </label>
             <input
               min={tool.min}
-              defaultValue={getStateVal(tool.id)}
               value={getStateVal(tool.id)}
               max={tool.max}
               type={'range'}
               step={tool.step}
               id={tool.id}
               onChange={(e) => setOption(tool.id, parseInt(e.target.value))}
+              disabled={image.length == 0}
             />
           </SidebarItemContent>
         ))}

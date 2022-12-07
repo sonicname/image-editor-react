@@ -11,13 +11,11 @@ interface IEditorStore {
   opacity: number;
   invert: number;
   sepia: number;
-  isRotated: boolean;
-  isReverseRotated: boolean;
+  rotateDeg: number;
   isFlipped: boolean;
   isReverseFlipped: boolean;
-  touchedRotate: () => void;
+  setRotateDeg: (val: number) => void;
   touchedFlipped: () => void;
-  touchedReverseRotate: () => void;
   touchedReverseFlip: () => void;
   setImage: (imageList: ImageListType) => void;
   setOption: (optionID: string, value: number) => void;
@@ -34,16 +32,17 @@ const useEditorStore = create<IEditorStore>((set) => ({
   contrast: 100,
   invert: 0,
   sepia: 0,
-  isRotated: false,
-  isReverseRotated: false,
+  rotateDeg: 0,
   isFlipped: false,
   isReverseFlipped: false,
-  touchedReverseRotate: () =>
-    set((state) => ({ isReverseRotated: !state.isReverseRotated, isRotated: false })),
+  setRotateDeg: (deg) =>
+    set((state) => ({
+      rotateDeg:
+        state.rotateDeg + deg >= 360 || state.rotateDeg + deg < -360 ? 0 : state.rotateDeg + deg,
+    })),
   touchedReverseFlip: () =>
     set((state) => ({ isReverseFlipped: !state.isReverseFlipped, isFlipped: false })),
   touchedFlipped: () => set((state) => ({ isFlipped: !state.isFlipped, isReverseFlipped: false })),
-  touchedRotate: () => set((state) => ({ isRotated: !state.isRotated, isReverseRotated: false })),
   setImage: (imageList) => set(() => ({ image: imageList })),
   setOption: (option, value) => {
     switch (option) {
