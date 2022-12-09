@@ -7,3 +7,7 @@
 html {
   font-family: 'Poppins', sans-serif;
 }
+
+.swiper-slide {
+  width: auto;
+}

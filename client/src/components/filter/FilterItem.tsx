@@ -41,7 +41,7 @@ const FilterItem = ({
 
   return (
     <div
-      className='w-full h-22 rounded-md shadow-md overflow-hidden border border-gray-300'
+      className='w-36 h-28 rounded-md shadow-md overflow-hidden border border-gray-300'
       onClick={handleSelectFilter}
     >
       <img
