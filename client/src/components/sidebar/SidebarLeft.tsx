@@ -26,8 +26,8 @@ const colorTools: IColorTools[] = [
     id: 'blur',
     title: 'Blur',
     min: 0,
-    max: 50,
-    step: 25,
+    max: 10,
+    step: 1,
     defaultValue: 0,
   },
   {
