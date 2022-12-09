@@ -57,13 +57,7 @@ const SidebarRight = () => {
       </SideBarItem>
       <SideBarItem content='Filter'>
         <div className='p-2 lg:p-4'>
-          <Swiper
-            spaceBetween={10}
-            grabCursor={true}
-            slidesPerView={'auto'}
-            modules={[Pagination]}
-            pagination={{ clickable: true }}
-          >
+          <Swiper spaceBetween={10} grabCursor={true} slidesPerView={'auto'}>
             <SwiperSlide>
               <FilterItem invert={100} />
             </SwiperSlide>
@@ -76,6 +70,14 @@ const SidebarRight = () => {
               <FilterItem brightness={200} saturate={180} />
             </SwiperSlide>
           </Swiper>
+        </div>
+      </SideBarItem>
+
+      <SideBarItem content='Advanced'>
+        <div className='p-2 lg:p-4'>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum inventore ratione cumque
+          consequuntur adipisci nihil, esse sint harum reiciendis officiis! Impedit veniam porro
+          minus tempora veritatis odit reprehenderit eum alias?
         </div>
       </SideBarItem>
     </div>
