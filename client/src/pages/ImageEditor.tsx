@@ -37,18 +37,20 @@ const ImageEditor = () => {
                 {imageList.length > 0 ? (
                   <div className='max-w-3xl w-full h-[567px] overflow-hidden rounded shadow-lg relative'>
                     <img
-                      className={classNames(
-                        'w-full h-full block object-contain duration-150',
-                        isFlipped && 'scale-x-[-1]',
-                        isReverseFlipped && 'scale-y-[-1]',
-                      )}
+                      className='w-full h-full block object-contain duration-150'
                       style={{
                         filter: `blur(${blur}px) brightness(${brightness}%) saturate(${saturate}%) contrast(${contrast}%) grayscale(${grayscale}%) opacity(${opacity}%) invert(${invert}%) sepia(${sepia}%)`,
                         rotate: `${rotateDeg}deg`,
+                        transform: `${isFlipped ? 'scaleX(-1)' : 'scaleX(1)'} ${
+                          isReverseFlipped ? 'scaleY(-1)' : 'scaleY(1)'
+                        }`,
                       }}
                       src={image[0].dataURL}
                       alt='image edit'
+                      id='image-data-edit'
                     />
+
+                    <canvas id='image-edit' className='opacity-0 invisible' />
 
                     <div
                       className='p-1 rounded-md absolute top-0 right-0 m-2 cursor-pointer bg-white hover:scale-105 duration-100 shadow-lg'

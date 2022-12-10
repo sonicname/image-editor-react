@@ -1,6 +1,4 @@
-import { memo } from 'react';
 import classNames from 'classnames';
-import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import SideBarItem from './SideBarItem';
@@ -84,4 +82,4 @@ const SidebarRight = () => {
   );
 };
 
-export default memo(SidebarRight);
+export default SidebarRight;

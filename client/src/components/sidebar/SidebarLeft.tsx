@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import SideBarItem from './SideBarItem';
 import SidebarItemContent from './SidebarItemContent';
 
@@ -88,6 +86,9 @@ const SidebarLeft = () => {
     saturate,
     sepia,
     image,
+    rotateDeg,
+    isFlipped,
+    isReverseFlipped,
   } = useEditorStore();
 
   const getStateVal = (optionID: string) => {
@@ -109,6 +110,45 @@ const SidebarLeft = () => {
       default:
         return sepia;
     }
+  };
+
+  const saveImage = () => {
+    const imageDl = new Image();
+    imageDl.crossOrigin = 'anonymous';
+    imageDl.src = image[0].dataURL as string;
+
+    imageDl.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+      canvas.width = imageDl.width;
+      canvas.height = imageDl.height;
+
+      ctx.save();
+
+      ctx.filter = `blur(${blur}px) brightness(${brightness}%) saturate(${saturate}%) contrast(${contrast}%) grayscale(${grayscale}%) opacity(${opacity}%) invert(${invert}%) sepia(${sepia}%)`;
+
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.scale(isFlipped ? -1 : 1, isReverseFlipped ? -1 : 1);
+
+      if (rotateDeg != 0 && (isFlipped || isReverseFlipped))
+        ctx.rotate(((rotateDeg + (rotateDeg == 180 ? 0 : 180)) * Math.PI) / 180);
+      else if (rotateDeg != 0) ctx.rotate((rotateDeg * Math.PI) / 180);
+
+      ctx.drawImage(
+        imageDl,
+        -imageDl.width / 2,
+        -imageDl.height / 2,
+        imageDl.width,
+        imageDl.height,
+      );
+
+      ctx.restore();
+
+      const a = document.createElement('a');
+      a.download = `edited.png`;
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+    };
   };
 
   return (
@@ -139,16 +179,25 @@ const SidebarLeft = () => {
         ))}
       </SideBarItem>
 
-      <div className='p-2 lg:p-4'>
-        <button
-          onClick={resetOption}
-          className='w-full bg-green-500 text-white p-2 rounded-md shadow-md active:scale-90 duration-100'
-        >
-          Reset
-        </button>
-      </div>
+      <SideBarItem content='Reset & Save'>
+        <div className='p-2 lg:p-4 flex flex-col gap-y-2 lg:gap-y-4'>
+          <button
+            onClick={resetOption}
+            className='w-full bg-gray-400 text-white p-2 rounded-md shadow-md active:scale-90 duration-100'
+          >
+            Reset
+          </button>
+
+          <button
+            onClick={saveImage}
+            className='w-full bg-green-500 text-white p-2 rounded-md shadow-md active:scale-90 duration-100'
+          >
+            Save
+          </button>
+        </div>
+      </SideBarItem>
     </div>
   );
 };
 
-export default memo(SidebarLeft);
+export default SidebarLeft;

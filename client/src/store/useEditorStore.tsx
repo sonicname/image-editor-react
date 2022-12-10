@@ -38,7 +38,7 @@ const useEditorStore = create<IEditorStore>((set) => ({
   setRotateDeg: (deg) =>
     set((state) => ({
       rotateDeg:
-        state.rotateDeg + deg >= 360 || state.rotateDeg + deg < -360 ? 0 : state.rotateDeg + deg,
+        state.rotateDeg + deg >= 360 || state.rotateDeg + deg <= -360 ? 0 : state.rotateDeg + deg,
     })),
   touchedReverseFlip: () =>
     set((state) => ({ isReverseFlipped: !state.isReverseFlipped, isFlipped: false })),
