@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import classNames from 'classnames';
 
 import useEditorStore from '../../store/useEditorStore';
@@ -55,4 +56,4 @@ const FilterItem = ({
   );
 };
 
-export default FilterItem;
+export default memo(FilterItem);
