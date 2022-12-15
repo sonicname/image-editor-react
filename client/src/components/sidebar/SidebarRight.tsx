@@ -11,7 +11,7 @@ const SidebarRight = () => {
     useEditorStore();
 
   return (
-    <div className='py-2 flex flex-col h-screen w-60 overflow-y-scroll text-black shadow-md'>
+    <div className='py-2 flex flex-col h-screen w-60 overflow-y-scroll text-black shadow-md scrollbar-thin scrollbar-thumb-gray-600 scrollbar-thumb-rounded scrollbar-track-gray-400'>
       <SideBarItem content='Rotate & Flip'>
         <div className='p-2 lg:p-4 grid grid-cols-2 gap-2 lg:gap-4'>
           <button

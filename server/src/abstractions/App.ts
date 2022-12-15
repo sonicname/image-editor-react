@@ -1,5 +1,7 @@
 import cors from 'cors';
+import path from 'path';
 import morgan from 'morgan';
+import { createWriteStream } from 'fs';
 import express, { Application } from 'express';
 
 import BaseController from './BaseController';
@@ -13,6 +15,9 @@ class App {
     this.app = express();
     this.port = port;
 
+    this.app.use('/uploads', express.static(path.join(__dirname + '/../..' + '/uploads')));
+    this.app.use('/edited', express.static(path.join(__dirname + '/../..' + '/python_scripts')));
+
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
     this.initializeErrorHandling();
@@ -21,6 +26,15 @@ class App {
   private initializeMiddlewares() {
     if (process.env['NODE_ENV'] === 'development') {
       this.app.use(morgan('dev'));
+    } else {
+      this.app.use(
+        morgan('combined', {
+          stream: createWriteStream(path.join(__dirname, '../..', 'logs', 'server.log'), {
+            encoding: 'utf8',
+            flags: 'a',
+          }),
+        }),
+      );
     }
     this.app.use(cors());
     this.app.use(express.json());
