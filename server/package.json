@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf build && tsc && tsc-alias",
     "test": "tsc && tsc-alias && node build/__test__/test.js",
-    "dev": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"tsc-alias -w\" \"nodemon -q build/server.js\"",
+    "dev": "cross-env NODE_ENV=development concurrently \"npx tsc --watch\" \"npx tsc-alias -w\" \"nodemon -q build/server.js\"",
     "start": "cross-env NODE_ENV=production node build/server.js"
   },
   "dependencies": {
@@ -19,12 +19,14 @@
     "helmet": "^6.0.1",
     "http-status-codes": "^2.2.0",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.14",
     "@types/morgan": "^1.9.3",
+    "@types/multer": "^1.4.7",
     "@types/node": "^18.11.13",
     "concurrently": "^7.6.0",
     "nodemon": "^2.0.20",

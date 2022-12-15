@@ -152,7 +152,7 @@ const SidebarLeft = () => {
   };
 
   return (
-    <div className='py-2 flex flex-col gap-y-2 lg:gap-y-4 h-screen w-60 overflow-y-scroll text-black shadow-md'>
+    <div className='py-2 flex flex-col gap-y-2 lg:gap-y-4 h-screen w-60 overflow-y-scroll text-black shadow-md scrollbar-thin scrollbar-thumb-gray-600 scrollbar-thumb-rounded scrollbar-track-gray-400'>
       <SideBarItem content='Color'>
         {colorTools.map((tool) => (
           <SidebarItemContent key={tool.id}>
