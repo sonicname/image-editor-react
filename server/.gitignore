@@ -4,4 +4,5 @@ build/
 .env
 uploads/*.png
 python_scripts/.idea
+python_scripts/*.png
 logs/
