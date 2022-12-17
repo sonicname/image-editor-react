@@ -20,9 +20,9 @@ export default class ScriptController extends BaseController {
       }),
     );
 
-    this.router.get(this.path + '/upscale', this.upscaleImage);
-    this.router.get(this.path + '/downscale', this.downscale);
-    this.router.get(this.path + '/noise_remove', this.noiseRemove);
+    this.router.post(this.path + '/upscale', this.upscaleImage);
+    this.router.post(this.path + '/downscale', this.downscale);
+    this.router.post(this.path + '/noise_remove', this.noiseRemove);
   }
 
   private upscaleImage = async (req: Request, res: Response) => {

@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/' element={<ImageEditor />} />
         </Routes>
       </BrowserRouter>
-      <ToastContainer />
+      <ToastContainer pauseOnHover={false} />
     </StrictMode>
   </>,
 );

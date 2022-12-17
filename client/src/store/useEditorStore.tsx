@@ -3,6 +3,7 @@ import { ImageListType } from 'react-images-uploading';
 
 interface IEditorStore {
   image: ImageListType;
+  fileEdited: File | undefined;
   brightness: number;
   blur: number;
   saturate: number;
@@ -14,6 +15,7 @@ interface IEditorStore {
   rotateDeg: number;
   isFlipped: boolean;
   isReverseFlipped: boolean;
+  setFileEdited: (file: File) => void;
   setRotateDeg: (val: number) => void;
   touchedFlipped: () => void;
   touchedReverseFlip: () => void;
@@ -24,6 +26,7 @@ interface IEditorStore {
 
 const useEditorStore = create<IEditorStore>((set) => ({
   image: [],
+  fileEdited: undefined,
   brightness: 100,
   blur: 0,
   opacity: 100,
@@ -35,6 +38,7 @@ const useEditorStore = create<IEditorStore>((set) => ({
   rotateDeg: 0,
   isFlipped: false,
   isReverseFlipped: false,
+  setFileEdited: (file) => set(() => ({ fileEdited: file })),
   setRotateDeg: (deg) =>
     set((state) => ({
       rotateDeg:
