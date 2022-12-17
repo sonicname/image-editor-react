@@ -2,6 +2,7 @@ import 'express-async-errors';
 import { config } from 'dotenv';
 
 import App from '@abstractions/App';
+
 import UploadController from '@controllers/UploadController';
 import ScriptController from '@controllers/ScriptController';
 

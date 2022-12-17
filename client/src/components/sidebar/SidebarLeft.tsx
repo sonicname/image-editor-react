@@ -1,77 +1,10 @@
 import SideBarItem from './SideBarItem';
 import SidebarItemContent from './SidebarItemContent';
 
+import { colorTools } from '../../constants/constants';
+
 import useEditorStore from '../../store/useEditorStore';
-
-interface IColorTools {
-  title: string;
-  id: string;
-  min?: number;
-  max?: number;
-  defaultValue?: number;
-  step?: number;
-}
-
-const colorTools: IColorTools[] = [
-  {
-    id: 'brightness',
-    title: 'Brightness',
-    min: 0,
-    max: 200,
-    defaultValue: 100,
-  },
-  {
-    id: 'blur',
-    title: 'Blur',
-    min: 0,
-    max: 10,
-    step: 1,
-    defaultValue: 0,
-  },
-  {
-    id: 'saturate',
-    title: 'Saturate',
-    min: 100,
-    max: 200,
-    defaultValue: 100,
-  },
-  {
-    id: 'contrast',
-    title: 'Contrast',
-    min: 0,
-    max: 200,
-    defaultValue: 100,
-  },
-  {
-    id: 'grayscale',
-    title: 'Grayscale',
-    min: 0,
-    max: 100,
-    defaultValue: 0,
-  },
-  {
-    id: 'opacity',
-    title: 'Opacity',
-    step: 50,
-    min: 0,
-    max: 100,
-    defaultValue: 100,
-  },
-  {
-    id: 'invert',
-    title: 'Invert',
-    min: 0,
-    max: 100,
-    defaultValue: 0,
-  },
-  {
-    id: 'sepia',
-    title: 'Sepia',
-    min: 0,
-    max: 100,
-    defaultValue: 0,
-  },
-];
+import covertToDataURL from '../../utils/covertToDataURL';
 
 const SidebarLeft = () => {
   const {
@@ -117,42 +50,30 @@ const SidebarLeft = () => {
     imageDl.crossOrigin = 'anonymous';
     imageDl.src = image[0].dataURL as string;
 
-    imageDl.onload = () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-      canvas.width = imageDl.width;
-      canvas.height = imageDl.height;
-
-      ctx.save();
-
-      ctx.filter = `blur(${blur}px) brightness(${brightness}%) saturate(${saturate}%) contrast(${contrast}%) grayscale(${grayscale}%) opacity(${opacity}%) invert(${invert}%) sepia(${sepia}%)`;
-
-      ctx.translate(canvas.width / 2, canvas.height / 2);
-      ctx.scale(isFlipped ? -1 : 1, isReverseFlipped ? -1 : 1);
-
-      if (rotateDeg != 0 && (isFlipped || isReverseFlipped))
-        ctx.rotate(((rotateDeg + (rotateDeg == 180 ? 0 : 180)) * Math.PI) / 180);
-      else if (rotateDeg != 0) ctx.rotate((rotateDeg * Math.PI) / 180);
-
-      ctx.drawImage(
-        imageDl,
-        -imageDl.width / 2,
-        -imageDl.height / 2,
-        imageDl.width,
-        imageDl.height,
-      );
-
-      ctx.restore();
+    imageDl.onload = async () => {
+      const dataURL = await covertToDataURL(imageDl, {
+        blur,
+        brightness,
+        rotateDeg,
+        contrast,
+        invert,
+        grayscale,
+        isFlipped,
+        isReverseFlipped,
+        opacity,
+        saturate,
+        sepia,
+      });
 
       const a = document.createElement('a');
       a.download = `edited.png`;
-      a.href = canvas.toDataURL('image/png');
+      a.href = dataURL;
       a.click();
     };
   };
 
   return (
-    <div className='py-2 flex flex-col gap-y-2 lg:gap-y-4 h-screen w-60 overflow-y-scroll text-black shadow-md scrollbar-thin scrollbar-thumb-gray-600 scrollbar-thumb-rounded scrollbar-track-gray-400'>
+    <div className='py-2 flex flex-col gap-y-2 lg:gap-y-4 h-screen w-60 overflow-y-scroll text-black shadow-md scrollbar-none'>
       <SideBarItem content='Color'>
         {colorTools.map((tool) => (
           <SidebarItemContent key={tool.id}>

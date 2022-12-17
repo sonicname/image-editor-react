@@ -4,14 +4,106 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SideBarItem from './SideBarItem';
 import FilterItem from '../filter/FilterItem';
 
+import dataURLToFile from '../../utils/dataURLToFile';
+import covertToDataURL from '../../utils/covertToDataURL';
+
 import useEditorStore from '../../store/useEditorStore';
 
+import { useDownscale, useNoiseRemove, useUpscale } from '../../hooks/useAdvancedEditor';
+
 const SidebarRight = () => {
-  const { setRotateDeg, isFlipped, isReverseFlipped, touchedFlipped, touchedReverseFlip, image } =
-    useEditorStore();
+  const {
+    setRotateDeg,
+    isFlipped,
+    isReverseFlipped,
+    touchedFlipped,
+    touchedReverseFlip,
+    image,
+    brightness,
+    blur,
+    contrast,
+    grayscale,
+    invert,
+    opacity,
+    rotateDeg,
+    saturate,
+    sepia,
+  } = useEditorStore();
+
+  const handleUpscaleImage = () => {
+    const imageDl = new Image();
+    imageDl.crossOrigin = 'anonymous';
+    imageDl.src = image[0].dataURL as string;
+
+    imageDl.onload = async () => {
+      const dataURL = await covertToDataURL(imageDl, {
+        blur,
+        brightness,
+        rotateDeg,
+        contrast,
+        invert,
+        grayscale,
+        isFlipped,
+        isReverseFlipped,
+        opacity,
+        saturate,
+        sepia,
+      });
+
+      useUpscale(dataURLToFile(dataURL));
+    };
+  };
+
+  const handleDownscaleImage = () => {
+    const imageDl = new Image();
+    imageDl.crossOrigin = 'anonymous';
+    imageDl.src = image[0].dataURL as string;
+
+    imageDl.onload = async () => {
+      const dataURL = await covertToDataURL(imageDl, {
+        blur,
+        brightness,
+        rotateDeg,
+        contrast,
+        invert,
+        grayscale,
+        isFlipped,
+        isReverseFlipped,
+        opacity,
+        saturate,
+        sepia,
+      });
+
+      useDownscale(dataURLToFile(dataURL));
+    };
+  };
+
+  const handleNoiseRemove = () => {
+    const imageDl = new Image();
+    imageDl.crossOrigin = 'anonymous';
+    imageDl.src = image[0].dataURL as string;
+
+    imageDl.onload = async () => {
+      const dataURL = await covertToDataURL(imageDl, {
+        blur,
+        brightness,
+        rotateDeg,
+        contrast,
+        invert,
+        grayscale,
+        isFlipped,
+        isReverseFlipped,
+        opacity,
+        saturate,
+        sepia,
+      });
+
+      useNoiseRemove(dataURLToFile(dataURL));
+    };
+  };
 
   return (
-    <div className='py-2 flex flex-col h-screen w-60 overflow-y-scroll text-black shadow-md scrollbar-thin scrollbar-thumb-gray-600 scrollbar-thumb-rounded scrollbar-track-gray-400'>
+    <div className='py-2 flex flex-col h-screen w-60 overflow-y-scroll text-black shadow-md scrollbar-none'>
       <SideBarItem content='Rotate & Flip'>
         <div className='p-2 lg:p-4 grid grid-cols-2 gap-2 lg:gap-4'>
           <button
@@ -72,10 +164,25 @@ const SidebarRight = () => {
       </SideBarItem>
 
       <SideBarItem content='Advanced'>
-        <div className='p-2 lg:p-4'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum inventore ratione cumque
-          consequuntur adipisci nihil, esse sint harum reiciendis officiis! Impedit veniam porro
-          minus tempora veritatis odit reprehenderit eum alias?
+        <div className='p-2 lg:p-4 flex gap-2 lg:gap-4 flex-col'>
+          <button
+            onClick={handleUpscaleImage}
+            className='p-2 font-medium bg-blue-500 rounded-md text-white shadow-md active:scale-90 duration-100'
+          >
+            Upscale
+          </button>
+          <button
+            onClick={handleDownscaleImage}
+            className='p-2 font-medium bg-blue-500 rounded-md text-white shadow-md active:scale-90 duration-100'
+          >
+            Downscale
+          </button>
+          <button
+            onClick={handleNoiseRemove}
+            className='p-2 font-medium bg-blue-500 rounded-md text-white shadow-md active:scale-90 duration-100'
+          >
+            Noise Remove
+          </button>
         </div>
       </SideBarItem>
     </div>
